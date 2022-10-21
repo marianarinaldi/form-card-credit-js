@@ -7,13 +7,13 @@ const ccLogo = document.querySelector(".cc-logo span:nth-child(2) img")
 
 function setCardType(type) {
   const colors = {
-    visa: ["#436d99", "#2D57F2"],
-    mastercard: ["DF6F29", "C69347"],
+    visa: ["#436D99", "#2D57F2"],
+    mastercard: ["#DF6F29", "#C69347"],
     default: ["black", "gray"],
   }
   ccBgColor01.setAttribute("fill", colors[type][0])
   ccBgColor02.setAttribute("fill", colors[type][1])
-  ccLogo.setAttribute("scr", `cc-${type}.svg`)
+  ccLogo.setAttribute("src", `cc-${type}.svg`)
 }
 
 globalThis.setCardType = setCardType
@@ -28,13 +28,13 @@ const expirationDate = document.querySelector("#expiration-date")
 const expirationDatePattern = {
   mask: "MM{/}YY",
   blocks: {
-    yy: {
+    YY: {
       mask: IMask.MaskedRange,
-      from: String(new Date().getFullYear).slice(2),
-      to: String(new Date().getFullYear + 10).slice(2),
+      from: String(new Date().getFullYear()).slice(2),
+      to: String(new Date().getFullYear() + 10).slice(2),
     },
     MM: {
-      maks: IMask.MaskedRange,
+      mask: IMask.MaskedRange,
       from: 1,
       to: 12,
     },
@@ -60,7 +60,7 @@ const cardNumberPattern = {
       cardtype: "default",
     },
   ],
-  dispath: function (appended, dynamicMasked) {
+  dispatch: function (appended, dynamicMasked) {
     const number = (dynamicMasked.value + appended).replace(/\D/g, "")
     const foundMask = dynamicMasked.compiledMasks.find(function (item) {
       return number.match(item.regex)
@@ -72,16 +72,16 @@ const cardNumberMasked = IMask(cardNumber, cardNumberPattern)
 
 const addButton = document.querySelector("#add-card")
 addButton.addEventListener("click", () => {
-  alert("Cartão Adicionado")
+  alert("Cartão Adicionado!")
 })
 
 document.querySelector("form").addEventListener("submit", (event) => {
   event.preventDefault()
 })
 
-const cardHolder = querySelector("#card-holder")
+const cardHolder = document.querySelector("#card-holder")
 cardHolder.addEventListener("input", () => {
-  const ccHolder = querySelector(".cc-holder .value")
+  const ccHolder = document.querySelector(".cc-holder .value")
   ccHolder.innerText =
     cardHolder.value.length === 0 ? "FULANO DA SILVA" : cardHolder.value
 })
